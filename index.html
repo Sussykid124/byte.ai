@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Byte.ai - AI Assistant</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+  <!-- Firebase Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+  <!-- Firebase Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+  <!-- Sign-In Section (shown when not signed in) -->
+  <div id="auth-container" class="auth-container">
+    <h2>Sign In to Byte.ai</h2>
+    <div id="auth-buttons">
+      <button id="google-signin">Sign in with Google</button>
+      <button id="github-signin">Sign in with GitHub</button>
+    </div>
+    <div id="email-auth">
+      <h3>Email Sign In / Sign Up</h3>
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+      <button id="email-signin">Sign In</button>
+      <button id="email-signup">Sign Up</button>
+    </div>
+  </div>
+
+  <!-- Main App Section (shown when signed in) -->
+  <div id="app-container" class="hidden">
+    <!-- Account Header with Management Buttons -->
+    <header class="account-header">
+      <p>Signed in as <span id="user-email"></span></p>
+      <button id="sign-out-btn">Sign Out</button>
+      <button id="reset-password-btn">Reset Password</button>
+      <button id="delete-account-btn">Delete Account</button>
+    </header>
+    <div class="container">
+      <h1>Byte.ai - AI Assistant</h1>
+      <div id="chat-history" class="chat-history"></div>
+      <form id="chat-form">
+        <textarea id="message" placeholder="Enter your message..." required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <hr>
+      <h3>Delete File from GitHub</h3>
+      <form id="delete-form">
+        <input type="text" id="filepath" placeholder="File Path (relative to repo)" required>
+        <input type="text" id="projectName" placeholder="Project Name" value="my_project" required>
+        <button type="submit">Delete File</button>
+      </form>
+      <div id="notifications"></div>
+      <hr>
+      <div class="api-settings">
+        <h3>API Settings</h3>
+        <p>
+          <label for="openrouterKey">OpenRouter API Key:</label>
+          <input type="text" id="openrouterKey" placeholder="Your OpenRouter API Key">
+        </p>
+        <p>
+          <label for="githubToken">GitHub Token:</label>
+          <input type="text" id="githubToken" placeholder="Your GitHub Token">
+        </p>
+        <button id="save-api-keys">Save API Keys</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Configuration and Initialization -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAULtzmjxaxkEFT0Lbn8VoJhIuZvSlUevg",
+      authDomain: "byteai-72f09.firebaseapp.com",
+      projectId: "byteai-72f09",
+      storageBucket: "byteai-72f09.firebasestorage.app",
+      messagingSenderId: "38172675483",
+      appId: "1:38172675483:web:d58333c480c6dc46b9253e",
+      measurementId: "G-TD0PPN6LYZ"
+    };
+    // Initialize Firebase before using any Firebase services
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <!-- Main Script -->
+  <script src="script.js"></script>
+</body>
+</html>
