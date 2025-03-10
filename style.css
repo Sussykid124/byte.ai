@@ -27,8 +27,7 @@ body {
   text-decoration: underline;
 }
 .auth-container,
-.app-container,
-.account-container {
+.app-container {
   max-width: 800px;
   margin: 30px auto;
   background: #fff;
@@ -39,14 +38,12 @@ body {
 .hidden {
   display: none;
 }
-.auth-container h2,
-.account-container h2 {
+.auth-container h2 {
   text-align: center;
   margin-bottom: 20px;
 }
 .auth-buttons,
-.email-auth,
-.account-actions {
+.email-auth {
   text-align: center;
   margin-top: 15px;
 }
@@ -74,15 +71,6 @@ body {
   display: block;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-.account-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #e9ecef;
-  padding: 10px 20px;
-  border-radius: 4px;
-  margin-bottom: 20px;
 }
 .chat-section {
   padding: 10px 0;
