@@ -9,26 +9,28 @@ const userEmailSpan = document.getElementById("user-email");
 const signOutBtn = document.getElementById("sign-out-btn");
 const resetPasswordBtn = document.getElementById("reset-password-btn");
 const deleteAccountBtn = document.getElementById("delete-account-btn");
+const saveApiKeysBtn = document.getElementById("save-api-keys");
+
 const googleBtn = document.getElementById("google-signin");
 const githubBtn = document.getElementById("github-signin");
 const emailSignInBtn = document.getElementById("email-signin");
 const emailSignUpBtn = document.getElementById("email-signup");
+
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 
 const openrouterKeyInput = document.getElementById("openrouterKey");
 const githubTokenInput = document.getElementById("githubToken");
-const saveApiKeysBtn = document.getElementById("save-api-keys");
 const notifications = document.getElementById("notifications");
 
-// Utility function for notifications
+// Utility: display notifications
 function notify(message, type = "error") {
   notifications.textContent = message;
   notifications.style.color = type === "error" ? "#d9534f" : "#28a745";
   setTimeout(() => { notifications.textContent = ""; }, 5000);
 }
 
-// Auth Handlers (similar to index.js)
+// Auth Handlers (similar to chat page)
 googleBtn.addEventListener("click", async () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   try {
