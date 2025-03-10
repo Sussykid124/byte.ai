@@ -21,17 +21,21 @@ const chatForm = document.getElementById("chat-form");
 const messageInput = document.getElementById("message");
 const notifications = document.getElementById("notifications");
 
+// DOM Elements for API Keys on Chat Page
+const openrouterKeyInput = document.getElementById("openrouterKey");
+const githubTokenInput = document.getElementById("githubToken");
+const saveApiKeysBtn = document.getElementById("save-api-keys");
+
 let conversationMemory = [];
 const repoUrlCache = {};
 
-// Utility: display notifications
+// Utility function to display notifications
 function notify(message, type = "error") {
   notifications.textContent = message;
   notifications.style.color = type === "error" ? "#d9534f" : "#28a745";
   setTimeout(() => { notifications.textContent = ""; }, 5000);
 }
 
-// Append a chat entry
 function appendChatEntry(role, text) {
   const entry = document.createElement("div");
   entry.classList.add("chat-entry", role);
@@ -40,13 +44,99 @@ function appendChatEntry(role, text) {
   chatHistory.scrollTop = chatHistory.scrollHeight;
 }
 
-// OpenRouter API: send message
+// Authentication Handlers
+googleBtn.addEventListener("click", async () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  try {
+    await auth.signInWithPopup(provider);
+  } catch (error) {
+    notify("Google sign-in error: " + error.message);
+  }
+});
+
+githubBtn.addEventListener("click", async () => {
+  const provider = new firebase.auth.GithubAuthProvider();
+  provider.addScope("repo");
+  try {
+    const result = await auth.signInWithPopup(provider);
+    // Optionally, GitHub token auto-save is handled in account page; here you can load it too.
+  } catch (error) {
+    notify("GitHub sign-in error: " + error.message);
+  }
+});
+
+emailSignInBtn.addEventListener("click", async () => {
+  try {
+    await auth.signInWithEmailAndPassword(emailInput.value, passwordInput.value);
+  } catch (error) {
+    notify("Email sign-in error: " + error.message);
+  }
+});
+
+emailSignUpBtn.addEventListener("click", async () => {
+  try {
+    await auth.createUserWithEmailAndPassword(emailInput.value, passwordInput.value);
+  } catch (error) {
+    notify("Email sign-up error: " + error.message);
+  }
+});
+
+signOutBtn.addEventListener("click", async () => {
+  try {
+    await auth.signOut();
+    notify("Signed out successfully.", "success");
+  } catch (error) {
+    notify("Sign-out error: " + error.message);
+  }
+});
+
+// Save API Keys to Firestore
+saveApiKeysBtn.addEventListener("click", async () => {
+  const user = auth.currentUser;
+  if (user) {
+    const apiData = {
+      openrouterKey: openrouterKeyInput.value.trim(),
+      githubToken: githubTokenInput.value.trim()
+    };
+    try {
+      await db.collection("users").doc(user.uid).set(apiData, { merge: true });
+      notify("API keys saved.", "success");
+    } catch (error) {
+      notify("Error saving API keys: " + error.message);
+    }
+  } else {
+    notify("You must be signed in to save API keys.");
+  }
+});
+
+// Listen for auth state changes and load API keys
+auth.onAuthStateChanged(user => {
+  if (user) {
+    userEmailSpan.textContent = user.email;
+    authContainer.classList.add("hidden");
+    appContainer.classList.remove("hidden");
+    // Load user's saved API keys from Firestore
+    db.collection("users").doc(user.uid).get().then(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        openrouterKeyInput.value = data.openrouterKey || "";
+        githubTokenInput.value = data.githubToken || "";
+      }
+    }).catch(error => {
+      console.error("Error loading API keys: ", error);
+      notify("Error loading API keys: " + error.message);
+    });
+  } else {
+    authContainer.classList.remove("hidden");
+    appContainer.classList.add("hidden");
+  }
+});
+
+// OpenRouter API call
 async function sendMessageToAI(message) {
-  // Use the OpenRouter API key from the account page (or save it in the chat page if desired)
-  const openrouterKeyInput = document.getElementById("openrouterKey");
-  const openrouterKey = openrouterKeyInput ? openrouterKeyInput.value.trim() : "";
+  const openrouterKey = openrouterKeyInput.value.trim();
   if (!openrouterKey) {
-    notify("Please enter your OpenRouter API Key in your account page.");
+    notify("Please enter your OpenRouter API Key in the API Settings.");
     return "";
   }
   const systemPrompt = {
@@ -81,124 +171,7 @@ async function sendMessageToAI(message) {
   }
 }
 
-// GitHub repository creation and file upload functions remain as previously defined
-async function createGithubRepo(repoName, githubToken) {
-  const url = "https://api.github.com/user/repos";
-  const payload = { name: repoName, private: false };
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${githubToken}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-    if (response.status === 201) {
-      const data = await response.json();
-      return data.html_url;
-    } else {
-      const errorData = await response.json();
-      console.error("GitHub repo creation error:", errorData);
-      if (errorData.message && errorData.message.includes("name already exists")) {
-        const userResp = await fetch("https://api.github.com/user", {
-          headers: { "Authorization": `Bearer ${githubToken}` }
-        });
-        const userData = await userResp.json();
-        return `https://github.com/${userData.login}/${repoName}`;
-      } else {
-        throw new Error(errorData.message || "Failed to create GitHub repository");
-      }
-    }
-  } catch (error) {
-    notify("Repo creation error: " + error.message);
-    return null;
-  }
-}
-
-async function uploadFileToGithub(repoUrl, filepath, code, githubToken) {
-  try {
-    const parts = repoUrl.replace("https://github.com/", "").split("/");
-    const owner = parts[0];
-    const repoName = parts[1];
-    const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/contents/${filepath}`;
-    let sha = null;
-    const getResponse = await fetch(apiUrl, {
-      headers: {
-        "Authorization": `Bearer ${githubToken}`,
-        "Accept": "application/vnd.github.v3+json"
-      }
-    });
-    if (getResponse.ok) {
-      const fileData = await getResponse.json();
-      sha = fileData.sha;
-    }
-    const encodedContent = btoa(code);
-    const payload = {
-      message: sha ? `Update ${filepath}` : `Add ${filepath}`,
-      content: encodedContent,
-      branch: "main"
-    };
-    if (sha) payload.sha = sha;
-    const putResponse = await fetch(apiUrl, {
-      method: "PUT",
-      headers: {
-        "Authorization": `Bearer ${githubToken}`,
-        "Accept": "application/vnd.github.v3+json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-    if (!putResponse.ok) {
-      const errorData = await putResponse.json();
-      throw new Error(errorData.message || `Failed to upload ${filepath}`);
-    }
-    return true;
-  } catch (error) {
-    notify("Upload error: " + error.message);
-    return false;
-  }
-}
-
-async function deleteFileFromGithub(repoUrl, filepath, githubToken) {
-  try {
-    const parts = repoUrl.replace("https://github.com/", "").split("/");
-    const owner = parts[0];
-    const repoName = parts[1];
-    const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/contents/${filepath}`;
-    const getResponse = await fetch(apiUrl, {
-      headers: {
-        "Authorization": `Bearer ${githubToken}`,
-        "Accept": "application/vnd.github.v3+json"
-      }
-    });
-    if (!getResponse.ok) {
-      const errorData = await getResponse.json();
-      throw new Error(errorData.message || `Failed to get file info for ${filepath}`);
-    }
-    const fileData = await getResponse.json();
-    const fileSha = fileData.sha;
-    const payload = { message: `Delete ${filepath}`, sha: fileSha, branch: "main" };
-    const deleteResponse = await fetch(apiUrl, {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${githubToken}`,
-        "Accept": "application/vnd.github.v3+json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-    if (!deleteResponse.ok) {
-      const errorData = await deleteResponse.json();
-      throw new Error(errorData.message || `Failed to delete ${filepath}`);
-    }
-    return true;
-  } catch (error) {
-    notify("Delete file error: " + error.message);
-    return false;
-  }
-}
-
+// Chat form submission
 chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const message = messageInput.value.trim();
@@ -210,17 +183,4 @@ chatForm.addEventListener("submit", async (e) => {
   appendChatEntry("assistant", aiResponse);
   conversationMemory.push({ role: "user", content: message });
   conversationMemory.push({ role: "assistant", content: aiResponse });
-  // Further processing (e.g., uploading code blocks) can be added here if needed.
-});
-
-// Listen for auth state changes on chat page
-auth.onAuthStateChanged(user => {
-  if (user) {
-    userEmailSpan.textContent = user.email;
-    authContainer.classList.add("hidden");
-    appContainer.classList.remove("hidden");
-  } else {
-    authContainer.classList.remove("hidden");
-    appContainer.classList.add("hidden");
-  }
 });
