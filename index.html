@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Byte.ai Chat</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+  <!-- Firebase Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+  <!-- Firebase Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <h1>Byte.ai</h1>
+    <a href="account.html" class="nav-link">My Account</a>
+  </nav>
+  <main id="app-container" class="app-container hidden">
+    <section class="chat-section">
+      <header class="chat-header">
+        <p>Welcome, <span id="user-email"></span></p>
+        <button id="sign-out-btn" class="btn small">Sign Out</button>
+      </header>
+      <div id="chat-history" class="chat-history"></div>
+      <form id="chat-form">
+        <textarea id="message" placeholder="Enter your message..." required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Sign-In Section -->
+  <section id="auth-container" class="auth-container">
+    <h2>Sign In to Byte.ai</h2>
+    <div class="auth-buttons">
+      <button id="google-signin" class="btn">Sign in with Google</button>
+      <button id="github-signin" class="btn">Sign in with GitHub</button>
+    </div>
+    <div class="email-auth">
+      <h3>Email Sign In / Sign Up</h3>
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+      <button id="email-signin" class="btn">Sign In</button>
+      <button id="email-signup" class="btn">Sign Up</button>
+    </div>
+  </section>
+
+  <div id="notifications" class="notifications"></div>
+
+  <!-- Firebase Config -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAULtzmjxaxkEFT0Lbn8VoJhIuZvSlUevg",
+      authDomain: "byteai-72f09.firebaseapp.com",
+      projectId: "byteai-72f09",
+      storageBucket: "byteai-72f09.firebasestorage.app",
+      messagingSenderId: "38172675483",
+      appId: "1:38172675483:web:d58333c480c6dc46b9253e",
+      measurementId: "G-TD0PPN6LYZ"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
