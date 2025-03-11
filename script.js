@@ -223,7 +223,7 @@ async function sendMessageToAI(message) {
   };
 
   const payload = {
-    model: "google/gemini-2.0-pro-exp-02-05:free",
+    model: "microsoft/phi-3-medium-128k-instruct:free",
     messages: [systemPrompt, ...conversationMemory, { role: "user", content: message }],
     temperature: 0.7
   };
