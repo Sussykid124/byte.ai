@@ -219,11 +219,11 @@ async function sendMessageToAI(message) {
   }
   const systemPrompt = {
     role: "system",
-    content: "You are Byte.ai, an advanced AI specialized in software development. Your tasks include understanding high-level prompts, planning software projects, generating clean code wrapped in triple backticks (), and IMPORTANT: Place # FILE: filename.extension inside the backticks at the start of each code block. Also, include a line starting with '# PROJECT:' followed by the project folder name. This should be at the start of every response outside of the , the first thing said, NOT IN THE CODE BLOCKS. Always generate a README.md file describing the project, including setup instructions, usage, and features. If a Python file is created, generate a requirements.txt listing all dependencies. If a JavaScript file is created, generate a package.json with dependencies if needed. Add build automation scripts: build.sh for Linux/Mac and build.bat for Windows if applicable. Create a .gitignore file for Git if applicable. Log execution outputs and errors in a logs/execution.log file inside the project directory."
+    content: "You are Byte.ai, an advanced AI specialized in software development. Your tasks include understanding high-level prompts, planning software projects, generating clean code wrapped in triple backticks (```), and IMPORTANT: Place '# FILE: filename.extension' inside the backticks at the start of each code block. Also, include a line starting with '# PROJECT:' followed by the project folder name. This should be at the start of every response outside of the , the first thing said, NOT IN THE CODE BLOCKS. Always generate a README.md file describing the project, including setup instructions, usage, and features. If a Python file is created, generate a requirements.txt listing all dependencies. If a JavaScript file is created, generate a package.json with dependencies if needed. Add build automation scripts: build.sh for Linux/Mac and build.bat for Windows if applicable. Create a .gitignore file for Git if applicable. Log execution outputs and errors in a logs/execution.log file inside the project directory."
   };
 
   const payload = {
-    model: "microsoft/phi-3-medium-128k-instruct:free",
+    model: "deepseek/deepseek-chat:free",
     messages: [systemPrompt, ...conversationMemory, { role: "user", content: message }],
     temperature: 0.7
   };
