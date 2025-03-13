@@ -1,111 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body, button, input, textarea, h1, h2, h3, p {
+  font-family: 'Poppins', sans-serif;
+}
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 20px;
+  min-height: 100vh;
+  overflow-y: auto; /* Enables scrolling */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Keeps content from getting stuck at the top */
+  background: linear-gradient(135deg, #000000, #002766);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  padding: 20px 0; /* Prevents content from sticking to the top */
 }
+
 .hidden {
   display: none;
 }
 .auth-container {
   max-width: 400px;
   margin: 2em auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1); /* Glass effect */
+  padding: 25px;
+  border-radius: 12px;
   text-align: center;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Softer border */
+  backdrop-filter: blur(10px); /* Glass effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Soft shadow */
 }
+
 .auth-container input {
-  width: 90%;
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-.auth-container button {
-  padding: 10px 20px;
-  margin: 5px;
-  background: #007bff;
-  border: none;
-  border-radius: 4px;
+  width: 90%; /* Reduce width slightly to center within the container */
+  max-width: 350px; /* Prevents stretching too far */
+  margin: 10px auto; /* Centers input elements */
+  display: block; /* Ensures they stay centered */
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
   color: #fff;
-  cursor: pointer;
+  font-size: 16px;
+  backdrop-filter: blur(5px);
+  transition: 0.3s;
 }
+
+.auth-container input:focus {
+  outline: none;
+  border-color: #007bff;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
 .auth-container button:hover {
-  background: #0056b3;
+  background: linear-gradient(135deg, #0056b3, #004494);
+  transform: scale(1.05);
 }
 .account-header {
+  max-width: 900px; /* Match chat width */
+  width: 95%;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.1); /* Glass effect */
+  padding: 15px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #e9ecef;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 20px;
 }
+
+/* Make the text and buttons align better */
 .account-header p {
   margin: 0;
+  font-weight: bold;
+  color: #fff;
 }
-.container {
-  max-width: 800px;
-  margin: auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 4px;
+
+/* Improve Buttons */
+.account-header button {
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.account-header button:hover {
+  background: linear-gradient(135deg, #0056b3, #004494);
+  transform: scale(1.05);
 }
 h1, h2, h3 {
   text-align: center;
-  color: #333;
-}
-.chat-history {
-  border: 1px solid #ccc;
-  padding: 10px;
-  height: 300px;
-  overflow-y: auto;
-  background: #fafafa;
-  margin-bottom: 20px;
-}
-.chat-entry {
-  margin-bottom: 10px;
-  padding: 5px;
-  border-bottom: 1px solid #eee;
-}
-.chat-entry.user {
-  color: #007bff;
-}
-.chat-entry.assistant {
-  color: #28a745;
-}
-form {
-  margin-bottom: 20px;
-}
-textarea, input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-button {
-  padding: 10px 20px;
-  background: #007bff;
-  border: none;
-  border-radius: 4px;
   color: #fff;
-  cursor: pointer;
 }
+.container {
+  max-width: 800px;
+  width: 90%;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.1); /* Glass effect */
+  padding: 25px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #fff; /* White text for readability */
+}
+
+/* Chat History */
+.chat-history {
+  height: 400px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.1); /* Glass effect */
+  padding: 15px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Chat Messages */
+.chat-entry {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 75%;
+  word-wrap: break-word;
+  backdrop-filter: blur(10px);
+}
+
+.chat-entry.user {
+  background: rgba(0, 123, 255, 0.2); /* Blue glass effect */
+  color: #007bff;
+  align-self: flex-end;
+}
+
+.chat-entry.assistant {
+  background: rgba(40, 167, 69, 0.2); /* Green glass effect */
+  color: #28a745;
+  align-self: flex-start;
+}
+
+/* Chat Input */
+form {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+textarea, input[type="text"] {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 16px;
+  backdrop-filter: blur(5px);
+  transition: 0.3s;
+}
+
+textarea:focus, input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Send Button */
+button {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
 button:hover {
-  background: #0056b3;
+  background: linear-gradient(135deg, #0056b3, #004494);
+  transform: scale(1.05);
 }
 .api-settings {
-  background: #e9ecef;
-  padding: 10px;
-  border-radius: 4px;
+  max-width: 600px;
+  width: 90%;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.1); /* Glass effect */
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #fff; /* White text for readability */
+  text-align: center;
+}
+
+/* API Settings Input Fields */
+.api-settings input {
+  width: 90%;
+  max-width: 500px;
+  padding: 12px;
+  margin: 10px auto;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 16px;
+  backdrop-filter: blur(5px);
+  transition: 0.3s;
+  display: block; /* Ensures proper centering */
+}
+
+.api-settings input:focus {
+  outline: none;
+  border-color: #007bff;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Save Button */
+.api-settings button {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.api-settings button:hover {
+  background: linear-gradient(135deg, #0056b3, #004494);
+  transform: scale(1.05);
 }
 #notifications {
-  margin-top: 10px;
+  max-width: 900px; /* Match the chat width */
+  width: 95%;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.1); /* Glass effect */
+  padding: 15px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
   font-weight: bold;
-}
+  color: #fff;
+} 
