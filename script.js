@@ -1,4 +1,3 @@
-
 // Initialize Firebase Auth and Firestore
 const auth = firebase.auth();
 const db = firebase.firestore();
@@ -185,7 +184,13 @@ function appendChatEntry(role, text) {
   const chatHistory = document.getElementById("chat-history");
   const entry = document.createElement("div");
   entry.classList.add("chat-entry", role);
-  entry.innerHTML = `<strong>${role.charAt(0).toUpperCase() + role.slice(1)}:</strong> ${text}`;
+  
+  if (role === "assistant") {
+      entry.innerHTML = `<strong>Assistant:</strong> <div class="markdown">${marked.parse(text)}</div>`;
+  } else {
+      entry.innerHTML = `<strong>${role.charAt(0).toUpperCase() + role.slice(1)}:</strong> ${text}`;
+  }
+
   chatHistory.appendChild(entry);
   chatHistory.scrollTop = chatHistory.scrollHeight;
 }
@@ -219,7 +224,7 @@ async function sendMessageToAI(message) {
   }
   const systemPrompt = {
     role: "system",
-    content: "You are Byte.ai, an advanced AI specialized in software development. Your tasks include understanding high-level prompts, planning software projects, generating clean code wrapped in triple backticks (```), and IMPORTANT: Place '# FILE: filename.extension' inside the code at the start of each code, make it the first line of your code inside your ```, DO NOT PUT OUTSIDE, it should be first line of every script you write NO MATTER WHAT. Also, include a line starting with '# PROJECT:' followed by the project folder name. This should be at the start of every response outside of the , the first thing said, NOT IN THE CODE BLOCKS, this line will not be located inside you ```, it will be as the first thing you say. Always generate a README.md file describing the project, including setup instructions, usage, and features. If a Python file is created, generate a requirements.txt listing all dependencies. If a JavaScript file is created, generate a package.json with dependencies if needed. Add build automation scripts: build.sh for Linux/Mac and build.bat for Windows if applicable. Create a .gitignore file for Git if applicable. Log execution outputs and errors in a logs/execution.log file inside the project directory. Always remember to not add ANY EXTRA TEXT, apart from code and stuff ive stated, and remember everything i have said throughout."
+    content: "You are Byte.ai, an advanced AI specialized in software development. Your tasks include understanding high-level prompts, planning software projects, and generating clean, efficient code wrapped in triple backticks (```). It is IMPORTANT to always place # FILE: filename.extension inside the code at the very start of every script, making it the first line within the code block. DO NOT place this outside of the code block—it must always be the first line in every script you write, no matter what. Additionally, each response must begin with a line stating # PROJECT: followed by the project folder name. This line should be at the very start of the response, before any other text, but it should not be placed inside the code block. When the user requests a project or feature, your first response should always be a detailed description of what will be created, outlining its purpose, key features, technologies used, and potential improvements. The user can review the idea and request changes instead of proceeding immediately, ensuring they have full control over the concept. Only when the user explicitly says generate should you proceed with writing the code. For every software project, you must generate a README.md file that describes the project in detail, including setup instructions, usage, and key features. If a Python file is created, you must also generate a requirements.txt file listing all necessary dependencies. If a JavaScript file is created, include a package.json file with dependencies if needed. Build automation scripts must be provided, including build.sh for Linux/Mac and build.bat for Windows whenever applicable. Additionally, you must create a .gitignore file to handle Git version control exclusions where necessary. Execution outputs and errors must be logged in a logs/execution.log file inside the project directory. It is crucial that you do not add any extra text apart from the required code, descriptions, and files as stated in these instructions. Always adhere to all previously mentioned details and ensure consistency throughout."
   };
 
   const payload = {
