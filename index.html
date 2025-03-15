@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Byte.ai - Made by Ekamveer</title>
+  <title>Byte.ai - AI Assistant</title>
   <link rel="stylesheet" href="style.css">
   <!-- Firebase App (the core Firebase SDK) -->
   <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
@@ -36,10 +36,22 @@
     <!-- Account Header with Management Buttons -->
     <header class="account-header">
       <p>Signed in as <span id="user-email"></span></p>
-      <button id="sign-out-btn">Sign Out</button>
-      <button id="reset-password-btn">Reset Password</button>
-      <button id="delete-account-btn">Delete Account</button>
-    </header>
+      <div class="dropdown">
+        <button class="dropbtn">⚙️ Settings</button>
+        <div class="dropdown-content">
+          <button id="sign-out-btn">Sign Out</button>
+          <button id="reset-password-btn">Reset Password</button>
+          <button id="delete-account-btn">Delete Account</button>
+          <hr>
+          <h3>API Settings</h3>
+          <label for="openrouterKey">OpenRouter API Key:</label>
+          <input type="text" id="openrouterKey" placeholder="Your OpenRouter API Key">
+          <label for="githubToken">GitHub Token:</label>
+          <input type="text" id="githubToken" placeholder="Your GitHub Token">
+          <button id="save-api-keys">Save API Keys</button>
+        </div>
+      </div>
+    </header>    
     <div class="container">
       <h1>Byte.ai - AI Assistant</h1>
       <div id="chat-history" class="chat-history"></div>
@@ -56,18 +68,6 @@
       </form>
       <div id="notifications"></div>
       <hr>
-      <div class="api-settings">
-        <h3>API Settings</h3>
-        <p>
-          <label for="openrouterKey">OpenRouter API Key:</label>
-          <input type="text" id="openrouterKey" placeholder="Your OpenRouter API Key">
-        </p>
-        <p>
-          <label for="githubToken">GitHub Token:</label>
-          <input type="text" id="githubToken" placeholder="Your GitHub Token">
-        </p>
-        <button id="save-api-keys">Save API Keys</button>
-      </div>
     </div>
   </div>
 
