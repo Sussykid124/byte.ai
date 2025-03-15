@@ -268,4 +268,82 @@ button:hover {
   color: #fff;
 } 
 
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 1000; /* High z-index to appear on top */
+}
 
+.dropbtn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dropbtn:hover {
+  background: linear-gradient(135deg, #0056b3, #004494);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  min-width: 250px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1500; /* Ensure it's above everything */
+}
+
+.dropdown-content input {
+  width: 90%;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.dropdown-content button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.dropdown-content button:hover {
+  background: linear-gradient(135deg, #0056b3, #004494);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Ensure the header has a high z-index */
+.account-header {
+  position: relative;
+  z-index: 1000; /* Ensure it stays on top */
+}
+
+/* Fix for content overlapping */
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Prevent dropdown from being cut off */
+.container {
+  overflow: visible;
+}
