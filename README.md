@@ -17,11 +17,11 @@ Byte.ai is a web app where you can ask an AI to generate a simple app or website
 
 ## 🧠 Tech stack
 
-- Language: (e.g. JavaScript / Python / both)  
-- Frontend: (e.g. HTML/CSS/JS, React, etc.)  
-- Backend: (e.g. Node.js / Python + Flask / etc.)  
+- Languages: HTML/CSS/JS  
+- Frontend: HTML/CSS/JS  
+- Backend: HTML/CSS/JS   
 - APIs:
-  - AI model: (e.g. OpenAI / local model / other)
+  - AI model: OpenRouter
   - GitHub API for repo creation and commits
 
 ## 🏗️ How it works (high level)
@@ -32,7 +32,7 @@ Byte.ai is a web app where you can ask an AI to generate a simple app or website
    - Create a new repository
    - Add the generated files
    - Commit + push
-4. User gets a link to their new GitHub repo.
+4. User can go to Github to access their new repo.
 
 ## 🌱 Future ideas
 
@@ -43,5 +43,5 @@ Byte.ai is a web app where you can ask an AI to generate a simple app or website
 
 ## 📌 Status
 
-- Project type: **Working prototype** / **In progress**  
-- Current state: (write a sentence like “Basic flow works, working on better error handling and UI.”)
+- Project type: **Working prototype**  
+- Current state: Basic flow works, working on better error handling and UI.
