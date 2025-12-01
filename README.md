@@ -1,47 +1,104 @@
 # Byte.ai
 
-Byte.ai is a web app where you can ask an AI to generate a simple app or website for you, and it will:
+Byte.ai is a web-based tool that lets you generate a complete app or
+website from a simple prompt --- and automatically publishes it to your
+GitHub account.\
+All you do is describe what you want. Byte.ai handles the code, repo
+creation, and upload.
 
-1. Generate all the project files (code, assets, etc.)
-2. Create a new GitHub repository in your account
-3. Push all the generated files into that repo automatically
+------------------------------------------------------------------------
 
-## ✨ What it does
+## ✨ Features
 
-- Takes a prompt like: “Make me a todo app in JavaScript” or “Make a simple portfolio website”
-- Uses AI to generate the code for the project
-- Uses the GitHub API to:
-  - Create a new repo under the user's account
-  - Commit the generated code
-  - Push everything so it’s instantly available on GitHub
+-   **AI-Generated Projects**\
+    Converts a natural-language prompt into a full project structure
+    with code and assets.
 
-## 🧠 Tech stack
+-   **Automatic GitHub Repository Creation**\
+    Creates a brand-new repository in the user's GitHub account.
 
-- Languages: HTML/CSS/JS  
-- Frontend: HTML/CSS/JS  
-- Backend: HTML/CSS/JS   
-- APIs:
-  - AI model: OpenRouter
-  - GitHub API for repo creation and commits
+-   **Auto-Commit & Push**\
+    Uploads all generated files directly into the new repo --- no manual
+    setup required.
 
-## 🏗️ How it works (high level)
+-   **Zero Setup Needed**\
+    Everything runs through the app; no local tools or command-line
+    steps required.
 
-1. User enters a prompt describing the app/site they want.
-2. Server sends the prompt to an AI model to generate project code.
-3. Server uses the GitHub API with the user’s auth token to:
-   - Create a new repository
-   - Add the generated files
-   - Commit + push
-4. User can go to Github to access their new repo.
+------------------------------------------------------------------------
 
-## 🌱 Future ideas
+## 🧠 How It Works
 
-- Add templates: mobile app, game, bot, etc.
-- Let users customize license / README / project name
-- Add UI to edit files before pushing to GitHub
-- Let the AI update an existing repo instead of always making a new one
+### 🗣️ 1. User Prompt
+
+The user enters a description such as:
+
+-   "Build me a todo app in vanilla JavaScript."\
+-   "Generate a personal portfolio website."\
+-   "Make a simple landing page for a mobile app."
+
+### 🤖 2. AI Code Generation
+
+The backend sends the prompt to an AI model (via OpenRouter) that
+generates:
+
+-   HTML\
+-   CSS\
+-   JavaScript\
+-   Assets or additional files as needed
+
+The output becomes a complete, ready-to-push project folder.
+
+### 🐙 3. GitHub Automation
+
+Using the user's GitHub authentication token, the system:
+
+-   Creates a new repository\
+-   Adds all generated project files\
+-   Commits the code\
+-   Pushes everything to GitHub automatically
+
+### 🔁 4. Project Ready
+
+The user can instantly open the new repo and view, clone, or deploy
+their generated project.
+
+------------------------------------------------------------------------
+
+## 🧩 Tech Stack
+
+-   **Languages:** HTML, CSS, JavaScript\
+-   **Frontend:** HTML/CSS\
+-   **Backend:** JS\
+-   **APIs:**
+    -   AI model via **OpenRouter**\
+    -   **GitHub API** for repos, commits, and file uploads
+
+------------------------------------------------------------------------
+
+## 📁 Project Structure (conceptual)
+
+    byte-ai/
+      index.html         # UI for entering prompts and viewing progress
+      style.css          # AI generation + GitHub integration
+      script.js        # Optional starter structures
+      README.md         # Project documentation
+
+------------------------------------------------------------------------
+
+## 🌱 Future Improvements
+
+-   Template presets (mobile app, game, bot, dashboard, etc.)\
+-   Customizable README, license, repo name\
+-   In-browser code editor before pushing files\
+-   Ability to update an **existing** repository\
+-   Option to generate multi-file or framework-based apps (React, Vue,
+    Svelte)
+
+------------------------------------------------------------------------
 
 ## 📌 Status
 
-- Project type: **Working prototype**  
-- Current state: Basic flow works, working on better error handling and UI.
+-   **Project Type:** Working prototype\
+-   **Current Progress:** Core generation + GitHub upload works.\
+    Improving UI, error handling, and customizable options.
