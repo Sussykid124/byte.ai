@@ -79,9 +79,9 @@ their generated project.
 ## 📁 Project Structure (conceptual)
 
     byte-ai/
-      index.html         # UI for entering prompts and viewing progress
-      style.css          # AI generation + GitHub integration
-      script.js        # Optional starter structures
+      index.html        
+      style.css         
+      script.js        
       README.md         # Project documentation
 
 ------------------------------------------------------------------------
